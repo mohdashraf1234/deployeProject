@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Cloud Contact Manager</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+	body {
+		background-color: #f8f9fa;
+		font-family: Arial, sans-serif;
+	}
+
+	.card {
+		border-radius: 20px;
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	}
+
+	.card-body {
+		padding: 50px;
+	}
+
+	.my_profile_picture {
+		border-radius: 50%;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #0056b3;
+	}
+
+	.btn-success {
+		background-color: #28a745;
+		border-color: #28a745;
+	}
+
+	.btn-success:hover {
+		background-color: #218838;
+		border-color: #218838;
+	}
+</style>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="card">
+				<div class="card-body my-5">
+					<div class="container text-center">
+						<img src="/img/contact-logo20.png" style="height: 200px; width: 200px"
+							class="my_profile_picture" alt="profile photo" />
+					</div>
+
+					<h1 class="text-center mt-3 text-secondary font-italic font-weight-light">
+						Start Adding your contacts on the cloud...</h1>
+
+					<a th:href="@{/user/add-contact}"
+						class="btn btn-primary mt-4 btn-block text-uppercase">Add New
+						Contact</a>
+						
+					<hr />
+					
+					<h3 class="my-3 text-center">Donate Us</h3>
+					<input id="payment_field" type="text" class="form-control my-2 text-center" placeholder="Enter amount here" />
+					
+					<div class="container text-center mt-3">
+						<button onclick="paymentStart()" class="btn btn-success btn-block">Checkout</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script>
+		function paymentStart() {
+			
+			alert("Payment process initiated!");
+		}
+	</script>
+</body>
+</html>

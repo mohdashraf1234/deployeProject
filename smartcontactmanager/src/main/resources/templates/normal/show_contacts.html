@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    th:replace="normal/base::layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Your Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .my_profile_picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .btn-danger,
+        .btn-primary {
+            width: 120px;
+            height: 40px;
+            margin-right: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-danger i,
+        .btn-primary i {
+            margin-right: 5px;
+        }
+
+        .page-link {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .page-link:hover {
+            color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="card mr-3 ml-3">
+            <div class="card-body">
+                <h1 class="text-center">Your Contacts</h1>
+                <!-- Search -->
+                <div class="search-container my-3">
+                    <input onkeyup="search()" id="search-input" type="text" class="form-control"
+                        placeholder="Search your contacts" />
+                    <div class="search-result"></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="c : ${contacts}">
+                                <th scope="row" th:text="${'SCMUSER'+c.cId}">1</th>
+                                <td>
+                                    <img src="" class="my_profile_picture" th:src="@{'/img/'+${c.image}}"
+                                        alt="profile photo" />
+                                    <span th:text="${c.name}"></span>
+                                </td>
+                                <td>
+                                    <a href="#" th:href="@{'/user/'+${c.cId}+'/contact'}"
+                                        th:text="${c.email}"></a>
+                                </td>
+                                <td th:text="${c.phone}">@mdo</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Contact Actions">
+                                        <a href="#" th:onclick="|deleteContact(${c.cId})|"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </a>
+                                        <form method="post" th:action="@{'/user/update-contact/'+${c.cId}}"
+                                            class="mt-2">
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Update
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${currentPage != 0}" class="page-item"><a
+                                th:href="@{'/user/show-contacts/'+${currentPage-1}}" class="page-link" href="#">Previous</a>
+                        </li>
+                        <li th:classappend="${currentPage==i-1?'active':''}" th:each="i : ${#numbers.sequence(1,totalPages)}"
+                            class="page-item"><a th:href="@{'/user/show-contacts/'+${i-1}}" class="page-link" href="#"><span
+                                    th:text="${i}"></span></a></li>
+                        <li th:if="${currentPage+1 != totalPages}" class="page-item"><a
+                                th:href="@{'/user/show-contacts/'+${currentPage+1}}" class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
